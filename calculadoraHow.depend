@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1616371910 source:c:\users\laíz sayuri\desktop\calculadorahow\main.cpp
+	<iostream>
+	<locale.h>
+	<stdlib.h>
+	<conio.h>
+	<string>
+
