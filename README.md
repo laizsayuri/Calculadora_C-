@@ -4,4 +4,4 @@ Calculadora de conversão de bases, nas opções de Binário para Decimal e Deci
 
 Como rodar a aplicação:
 
--   Para rodar a aplicação, deve executar o link main.exe. A aplicação ficará disponível para começar a execução de comandos. Escolha uma das opções que deseja de conversão, e em seguida digite o número desejado, o resultado da conversão será apresentado. Caso queira uma nova consulta, basta dar "enter" e o menu irá aparecer novamente, apresentando as opções de conversão.
+-   Para rodar a aplicação, deve executar o arquivo main.exe. A aplicação ficará disponível para começar a execução de comandos. Escolha uma das opções que deseja de conversão, e em seguida digite o número desejado, o resultado da conversão será apresentado. Caso queira uma nova consulta, basta dar "enter" e o menu irá aparecer novamente, apresentando as opções de conversão.
