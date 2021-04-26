@@ -3,92 +3,170 @@
 #include <stdlib.h>
 #include <conio.h>
 #include <string>
+#include <cmath>
 
 using namespace std;
 
-int binaryToDecimal(int n)
+int binarioParaDecimal(int binario)
 {
-    int num = n;
-    int dec_value = 0;
+    int decimal, potenciaFinal;
+    string stringBinario;
 
-    int base = 1;
+    decimal = 0;
+    stringBinario = std::to_string(binario);
 
-    int temp = num;
-    while (temp) {
-        int last_digit = temp % 10;
-        temp = temp / 10;
+    potenciaFinal = (stringBinario.length() - 1);
 
-        dec_value = dec_value + (last_digit * base);
-
-        base = base * 2;
+    for (int i = 0; i <= potenciaFinal; i++)
+    {
+        decimal = decimal + pow(2, i) * (binario % 10);
+        binario = binario / 10;
     }
 
-    return dec_value;
+    return decimal;
 }
 
-int decimalToBinary(int n){
+bool validaBinario(int binario)
+{
+    int indiceFinal;
+    string binarioString;
+    bool sucesso;
 
-    int binary_num[32];
-    string binary_string;
-    int binary_value;
-
-    int i = 0;
-    while (n > 0){
-        binary_num[i] = n % 2;
-        n = n / 2;
-        i++;
+    if (binario > 1111111111 || binario < 0)
+    {
+        return false;
     }
 
-    for (int j = i - 1; j >= 0; j--){
-        binary_string = binary_string + std::to_string(binary_num[j]);
+    binarioString = std::to_string(binario);
+    indiceFinal = (binarioString.length() - 1);
+
+    sucesso = true;
+    for(int i = 0; i <= indiceFinal; i++)
+    {
+        if(binarioString[i] != '0' && binarioString[i] != '1')
+        {
+            sucesso = false;
+            break;
+        }
     }
 
-    binary_value = std::stoi(binary_string);
-    return binary_value;
+    return sucesso;
+}
+
+void binarioParaDecimalMenu()
+{
+    int binario;
+    int decimal;
+    bool valido;
+
+    system("clear || cls");
+    cout << "Você escolheu Binário para Decimal.\nDigite um valor em Binário menor ou igual a 11 1111 1111: ";
+    cin >> binario;
+
+    valido = validaBinario(binario);
+
+    if(valido){
+        decimal = binarioParaDecimal(binario);
+        cout << "O valor convertido é: " << decimal << endl;
+    }
+    else{
+        cout << "\nValor não válido!\nDigite um valor Binário com um valor menor ou igual a 11 1111 1111" << endl;
+    }
+
+    getch();
+}
+
+int decimalParaBinario(int decimal)
+{
+    int tamanhoVetor, ultimaPosicao, contador, primeiraPosicao;
+    int binarios[8];
+    string binarioString;
+
+    tamanhoVetor = 8;
+    ultimaPosicao = tamanhoVetor - 1;
+    contador = 0;
+
+    for (int i = ultimaPosicao; i >= 0; i--)
+    {
+        binarios[i] = decimal % 2;
+        decimal = decimal / 2;
+        contador++;
+
+        if (decimal == 0){
+            break;
+        }
+    }
+
+    primeiraPosicao = tamanhoVetor - contador;
+    for (int i = primeiraPosicao; i < tamanhoVetor; i++)
+    {
+        binarioString = binarioString + std::to_string(binarios[i]);
+    }
+
+    return std::stoi(binarioString);
+}
+
+bool validaDecimal(int decimal)
+{
+    return decimal >= 0 && decimal <= 255;
+}
+
+void decimalParaBinarioMenu()
+{
+    int decimal;
+    int binario;
+    bool valido;
+
+    system("clear || cls");
+    cout << "Você escolheu Decimal para Binário.\nDigite um valor em Decimal positivo menor ou igual a 255: ";
+    cin >> decimal;
+
+    valido = validaDecimal(decimal);
+
+    if(valido){
+        binario = decimalParaBinario(decimal);
+        cout << "O valor convertido é: " << binario << endl;
+    }
+    else{
+        cout << "\nValor não válido!\nDigite um valor Decimal positivo menor ou igual a 255" << endl;
+    }
+
+    getch();
 }
 
 int main()
 {
-    int valor;
+    int operador;
+    bool executando = true;
+
     setlocale(LC_ALL, "Portuguese");
-    do {
+
+    while(executando){
         system("clear || cls");
         cout << "** Minha calculadora **" << endl;
         cout << "Escolha uma opção: " << endl;
-        cout << "1- Binário para Decimal" << endl;
-        cout << "2- Decimal para Binário" << endl;
-        cout << "0- Para sair" << endl;
+        cout << "1 - Binário para Decimal" << endl;
+        cout << "2 - Decimal para Binário" << endl;
+        cout << "0 - Para sair\n" << endl;
 
+        cin >> operador;
 
-        cin >> valor;
-        system("clear || cls");
-        if(valor == 1) {
-            int binario;
-            cout << "Você escolheu Binário para Decimal, digite um número em Binário: ";
-            cin >> binario;
-            cout << "O número digitado foi: " << binario << endl;
-            int decimal = binaryToDecimal(binario);
-            cout << "O valor convertido é: " << decimal << endl;
-            getch();
-
-        }else if(valor == 2) {
-            int decimal;
-            cout << "Você escolheu Decimal para Binário, digite um número em Decimal: ";
-            cin >> decimal;
-            cout << "O número digitado foi: " << decimal << endl;
-            int binario = decimalToBinary(decimal);
-            cout << "O valor convertido é: " << binario << endl;
-            getch();
-
-        }else if (valor != 0){
-            cout << "Opção inválida!";
-            getch();
+        switch(operador){
+            case 1:
+                binarioParaDecimalMenu();
+                break;
+            case 2:
+                decimalParaBinarioMenu();
+                break;
+            case 0:
+                executando = false;
+                break;
+            default:
+                cout << "\nOpção inválida! Tente novamente";
+                getch();
+                break;
         }
-
-    }  while( valor != 0);
-    cout << "Até breve!" << endl;
+    }
 
     return 0;
 }
-
-
